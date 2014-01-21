@@ -28,6 +28,9 @@ Makes a simple API call on the given resources. Only retrieves entities
 that have a matching SEP entry. Returns an array of PHP classes representing
 the entity.
 */
+/*
+*/
+
 function inpho($url) {
     global $host;
     $ch = curl_init();
