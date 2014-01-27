@@ -30,6 +30,7 @@ the entity.
 */
 /*
 */
+//curl gets data from URL 
 
 function inpho($url) {
     global $host;

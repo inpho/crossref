@@ -112,7 +112,13 @@ function thinker_idea($id) {
     return $c;
 }
 
-/* function process_relation
+/* function process_relation?
+three arguments(rel_name = string, identifier for that relation (e.g. occi for occurences); API data; global array w/all the data, takes data from $data and inserts into global $c)
+
+logic - loop processes the term, iterates through $data, indexes by label (id maybe better), sep_dir = properties of that label + adds into the array $c, rel_name = stores the ranking of that dimension (e.g. if it's 3rd object, have occ of 3, null if not listed)
+
+if statement: counts how many sources that thing has appeared in, increments num_sources by 1 
+returns $c
 */
 function process_relation($rel_name, $data, $c) {
     global $host;

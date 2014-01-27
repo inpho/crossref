@@ -8,4 +8,21 @@ January 21, 2013
     d. javascript debugger in chrome/safari or render as you go
     e. php has API url call, gives idea of how to render 
     
-2. later: related entires file 
+2. later: related entries file 
+
+January 27, 2014
+
+To ask:
+
+1. explain process_relation function in crossref.php
+2. return format of API call, json
+3. json array format? mustache template like in inpho box?
+
+TODO
+
+FUNCTIONS in funcs.php
+
+inpho(url) - possible working solution
+get_sepArray() - possible working solution
+draw_query() - nothing yet
+
