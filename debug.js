@@ -1,20 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>CrossRef Rewrite</title>
-  <!-- Stylesheet Imports -->
-  <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
+$(document).ready(function () {
+    alert("my in jQuery document ready handler");
+}) 
 
-  <!-- Javascript Imports -->
-  <script src="lib/js/jquery-1.10.2.min.js" type="text/javascript"></script>
-  <script src="lib/js/bootstrap.min.js" type="text/javascript"></script>
-  <script src="lib/js/mustache.js" type="text/javascript"></script>
-</head>
 
-<body>
 
-    <script type="text/javascript">
-        //Function: inpho_get 
+       //Function: inpho_get 
         //Notes: makes API call to retrieve entities that have a matching SEP entry
         //Returns: Array of results in single json entry
         //desired json return array ????
@@ -34,7 +24,7 @@
             host = "https://inpho.cogs.indiana.edu"; 
             var json_array = [];  //empty array to store returned entities 
             
-            for(i = 0; length = url.length; i < length; i++){
+            for(var i = 0 , l = url.length; i < l; i++){
             
             $.ajax({
                 type: 'GET',
@@ -43,7 +33,7 @@
                 data: url[i],
                 success:function(jsonData){ //going to be similar to process_relation, can just use process_relation, jquery.each method (pass list of urls aka similar to map) "at the same time - nonblocking"
                   
-                    for(var i = 0, length < jsonData.items.length; i<length; i++){
+                    for(var i = 0, l < jsonData.items.length; i < l  ; i++){
                         json_array.push(jsonData.items[i]);
                     }
                 }
@@ -66,6 +56,10 @@
             return sep_array; 
         }
         
+        /*
+        function: draw_query
+        */
+        
        function draw_query() {
         document.write('<script language="javascript" type="text/javascript" src="actb.js" charset="UTF-8"></script>');
         document.write('<script language="javascript" type="text/javascript" src="common.js" charset="UTF-8"></script>');
@@ -77,12 +71,14 @@
         document.write('</script>');
         document.write('<form action="crossref.php" method="get">');
         document.write('SEP canonical directory: <input type="text" name="query" id="query" value="');
-        if(isset($sep_dir)) echo $sep_dir;
-        echo '">';
-        echo '<script>var obj = actb(document.getElementById(\'query\'),aSEP);</script>';
-        echo '<input type="submit" value="Edit references">';
-        echo '</form>';
-        for ($i=0; $i<5; $i++) { echo "<br />"; }
+        if(typeof(sep_dir) != "undefined" && variable !== null){
+            document.write(sep_dir);
+        }
+        document.write('">');
+        document.write('<script>var obj = actb(document.getElementById(\'query\'),aSEP);</script>');
+        document.write('<input type="submit" value="Edit references">');
+        document.write('</form>');
+        for ($i=0; $i<5; $i++) { document.write("<br />";)}
     }
         
         
@@ -113,12 +109,59 @@
         /*Function: thinker  */
         
         function thinker(id){
-            thinker_sources = thinker = ["/thinker/$id/occurrences.json?sep_filter=True", "/thinker/$id/related.json?sep_filter=True", "/thinker/$id/hyponyms.json?sep_filter=True", "/thinker/$id/influenced.json?sep_filter=True"]
+            thinker_sources = ["/thinker/$id/occurrences.json?sep_filter=True", "/thinker/$id/related.json?sep_filter=True", "/thinker/$id/hyponyms.json?sep_filter=True", "/thinker/$id/influenced.json?sep_filter=True"]
             
             inpho_get(thinker_sources);
         }
+        
+        /*
+        function: process_relation
+        input: relation name (string identifier for that relation, e.g. occ for occurances); data - API data; global json_array w/ all SEP data   
+        returns: json_array w/ num_sources incremented
+        */
+        
+        function process_relation(rel_name, data, json_array){
+            
+            for(var i = 0; i < data.length; i++){
+                entity = data[i];
+                
+                json_array[entity.ID]['ID'] = entity.ID;
+                json_array[entity.ID]['sep_dir'] = entity.sep_dir;
+                json_array[entity.ID]['url'] = entity.url;
+                json_array[entity.ID][rel_name] = i + 1; 
+                
+                if(typeof json_array[entity.ID]['num_soruces'] != undefined) {
+                    json_array[entity.ID]['num_sources'] = 0;
+                }
+                json_array[entity.ID]['num_sources']++; 
+            }
+            return json_array; 
+        }
+        
+        /*
+        function: add_selected
+        input: query, json_array, bio
+        */
+        
+        function add_selected(query, json_array, bio){
+            
+        }
+        
+        /*
+        function: get_sep_idea
+        returns InPho entity for a given sep_dir
+        */
+        function get_sep_idea(sep_dir){
+            var results = [];
+            var query = "/entity.json?sep=$sep_dir";
+            
+            results = inpho_get("/entity.json?sep=$sep_dir");
+            
+            if(results.length > 0){
+                return results[0];
+            }
+            else {
+                return null; 
+            }
+        }
        
-    </script>
-
-</body>
-</html>

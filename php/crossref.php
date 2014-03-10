@@ -115,15 +115,20 @@ function thinker_idea($id) {
 /* function process_relation?
 three arguments(rel_name = string, identifier for that relation (e.g. occi for occurences); API data; global array w/all the data, takes data from $data and inserts into global $c)
 
-logic - loop processes the term, iterates through $data, indexes by label (id maybe better), sep_dir = properties of that label + adds into the array $c, rel_name = stores the ranking of that dimension (e.g. if it's 3rd object, have occ of 3, null if not listed)
+logic - loop processes the term, iterates through $data, indexes by label (id may be better), sep_dir = properties of that label + adds into the array $c, rel_name = stores the ranking of that dimension (e.g. if it's 3rd object, have occ of 3, null if not listed)
 
 if statement: counts how many sources that thing has appeared in, increments num_sources by 1 
 returns $c
-*/
+-> is called "object operator", accesses method and property from an instantiated class
+
+entity, one of the json objects in the array (element) entity->label is label on that particular object
+'label', secondary hash that builds new array, new array that's indexed by id numbers, creating hash by id numbers inside w/ an object*/
+
 function process_relation($rel_name, $data, $c) {
     global $host;
-    $data = (array) $data;
+    $data = (array) $data; //basically arrays = hash tables in php
     // Process related terms:
+    //hash table w/keys 
     for ($i = 0; $i < count($data); $i++) {
         $entity = $data[$i];
         $c[$entity->label]['label'] = $entity->label;
@@ -140,7 +145,8 @@ function process_relation($rel_name, $data, $c) {
 
 /* This function marks the already existing crossreferences and adds any that
 are not present in the data sources retrieved from the InPhO API (the manually
-added crossrefs) */
+added crossrefs) 
+-> is called "object operator", accesses method and property from an instantiated class*/
 function add_selected($query, $c, $bio) {
     global $host;
     $select = selected($query, $bio);
@@ -226,6 +232,7 @@ if ($type == "idea") {
     $bio_ranks = add_selected($sep_dir, $bio_ranks, true);
     usort($bio_ranks, "bio_ref_cmp");
 }
+
 
 
 

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <title>CrossRef Rewrite</title>
+   <!-- Stylesheet Imports -->
+   <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
+   <!-- Javascript Imports -->
+   <script src="lib/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+   <script src="lib/js/bootstrap.min.js" type="text/javascript"></script>
+   <script src="lib/js/mustache.js" type="text/javascript"></script>
+   <script src="lib/js/angular.min.js" type="text/javascript"></script>
+   <script src="crossRef.js" type="text/javascript"></script>
+   <style type="text/css">
+      table, th, td
+      {
+         border: 1px solid black;
+      }
+   </style>
+</head>
+<body ng-app="crossRef" ng-controller="crossRefCtrl">
+   Search by ID or name:
+   <input ng-model="newThinkerID" />
+   <button ng-click="getNewThinker()">
+      Get this thinker</button><br />
+   Current thinker {{currentThinkerID}} is <span style="font-weight: bold">{{currentThinker.label}}</span>
+   
+   <!--  <div ng-init ="searchCriteria">
+   Search: <input ng-model ="search.$">
+   <tr ng-repeat="thinker in searchCriteria | filter:search">  --!>
+ 
+   <!-- This area starts the cross reference code -->
+   <table>
+      <thead>
+         <tr>
+            <td style="margin-left:20px; width:60px;">
+               1
+            </td>
+            <td style="width:60px;">
+               2
+            </td>
+            <td style="width:60px;">
+               3
+            </td>
+            <td style="width:60px;">
+               4
+            </td>
+            <td>
+               Thinker
+            </td>
+         </tr>
+      </thead>
+      <tbody>
+         <tr ng-repeat="thinker in currentThinker.thinkerCrossRef">
+            <td>
+               {{thinker.occurrencesRanking}}
+            </td>
+            <td>
+               {{thinker.hyponymsRanking}}
+            </td>
+            <td>
+               {{thinker.relatedRanking}}
+            </td>
+            <td>
+               {{thinker.influencedRanking}}
+            </td>
+            <td>
+               <a ng-click="getThisThinker(thinker.ID)">{{thinker.label}}</a><br>
+               <a ng-href="https://inpho.cogs.indiana.edu/thinker/{{thinker.ID}}"/>InPho Entry</a><br>
+               <a ng-href="http://plato.stanford.edu/entries/{{thinker.sep_dir}}"/>Stanford Entry</a> 
+            </td>
+         </tr>
+      </tbody>
+   </table>
+</body>
+</html>
