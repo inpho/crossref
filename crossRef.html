@@ -6,6 +6,7 @@
    <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
    <!-- Javascript Imports -->
    <script src="lib/js/jquery-1.10.2.min.js" type="text/javascript"></script>
+   <script src="lib/js/jquery-ui-1.10.4.js" type="text/javascript"></script>
    <script src="lib/js/bootstrap.min.js" type="text/javascript"></script>
    <script src="lib/js/mustache.js" type="text/javascript"></script>
    <script src="lib/js/angular.min.js" type="text/javascript"></script>
@@ -18,55 +19,43 @@
    </style>
 </head>
 <body ng-app="crossRef" ng-controller="crossRefCtrl">
-   Search by ID or name:
-   <input ng-model="newThinkerID" />
 
-   <!--<input auto-complete ui-items="names" ng-model="selected">
-        selected = {{selected}}--!>    
+         <input auto-complete ui-items="labels" ng-model="selected">
+         selected = {{selected}}
 
-   <!--  <div ng-init ="searchCriteria">
-   Search: <input ng-model ="search.$">
-   <tr ng-repeat="thinker in searchCriteria | filter:search">  --!>
- 
+<!--   Enter a new thinker id:
+   <input ng-model="newThinkerID" auto-complete />
+   <button ng-click="getNewThinker()">
+      Get this thinker</button><br />-->
+   Current thinker {{currentThinkerID}} is <span style="font-weight: bold">{{currentThinker.label}}</span>
    <!-- This area starts the cross reference code -->
    <table>
       <thead>
          <tr>
-            <td style="margin-left:20px; width:60px;">
-               1
+            <td style="margin-left: 20px; width: 60px;">1
             </td>
-            <td style="width:60px;">
-               2
+            <td style="width: 60px;">2
             </td>
-            <td style="width:60px;">
-               3
+            <td style="width: 60px;">3
             </td>
-            <td style="width:60px;">
-               4
+            <td style="width: 60px;">4
             </td>
-            <td>
-               Thinker
+            <td>Thinker
             </td>
          </tr>
       </thead>
       <tbody>
          <tr ng-repeat="thinker in currentThinker.thinkerCrossRef">
-            <td>
-               {{thinker.occurrencesRanking}}
+            <td>{{thinker.occurrencesRanking}}
+            </td>
+            <td>{{thinker.hyponymsRanking}}
+            </td>
+            <td>{{thinker.relatedRanking}}
+            </td>
+            <td>{{thinker.influencedRanking}}
             </td>
             <td>
-               {{thinker.hyponymsRanking}}
-            </td>
-            <td>
-               {{thinker.relatedRanking}}
-            </td>
-            <td>
-               {{thinker.influencedRanking}}
-            </td>
-            <td>
-               <a ng-click="getThisThinker(thinker.ID)">{{thinker.label}}</a><br>
-               <a ng-href="https://inpho.cogs.indiana.edu/thinker/{{thinker.ID}}"/>InPho Entry</a><br>
-               <a ng-href="http://plato.stanford.edu/entries/{{thinker.sep_dir}}"/>Stanford Entry</a> 
+               <a ng-click="getThisThinker(thinker.ID)">{{thinker.label}}</a>
             </td>
          </tr>
       </tbody>

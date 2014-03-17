@@ -10,41 +10,55 @@
    var host = "https://inpho.cogs.indiana.edu";
 
    var crossRef = angular.module("crossRef", []);
-   crossRef.controller("crossRefCtrl", function ($scope, $http, $q) {
+   crossRef.controller("crossRefCtrl", function ($scope, $http, $q, $timeout) {
 
       $scope.currentThinkerID = "3345";
       $scope.newThinkerID = "";
 
-      $scope.currentThinker = []; //initialize to an empty array.
+      $scope.currentThinker = {}; //initialize to an empty array.
 
       $scope.getCurrentThinker = function () {
          getThinkerService($scope, $http, $q);
       };
-    
-    
+
       $scope.getThisThinker = function (thinkerID) {
          $scope.currentThinkerID = thinkerID;
          $scope.getCurrentThinker();
-      }
+      };
 
       $scope.getNewThinker = function () {
          $scope.getThisThinker($scope.newThinkerID);
-      }
-      setTimeout($scope.getCurrentThinker(), 500);
-    
-      crossRef.directive('autoComplete', function($timeout) {
-            return function(scope, iElement, iAttrs) {
-                    iElement.autocomplete({
-                        source: scope[iAttrs.uiItems],
-                        select: function() {
-                            $timeout(function() {
-                              iElement.trigger('input');
-                            }, 0);
-                        }
-                    });
-            };
-        });
+      };
+
+      $scope.entities = [];
+      $scope.labels = [];
+      setTimeout($scope.getCurrentThinker(), 50);
+      $timeout(function () { getEntities($scope, $http, $q) }, 50);
    });
+
+   function getEntities(scope, http, $q) {
+
+      var defer = $q.defer();
+
+      http({ method: 'GET', url: host + "//entity.json?sep_filter=True" }).
+         success(function (data, status, headers, config) {
+            defer.resolve(data.responseData.results);
+         }).
+         error(function (data, status, headers, config) {
+            defer.reject();
+         });
+
+      defer.promise.then(function (results) {
+         scope.entities = results;
+         for (var i = 0; i < scope.entities.length; i++) {
+            var entity = scope.entities[i];
+
+            if (entity.type === "thinker") {
+               scope.labels.push(entity.label);
+            }
+         }
+      });
+   }
 
    function getThinkerService(scope, http, $q) { //retrieve one thinker at a time using http service provided by AngularJS.  Recommend to stick with AngularJS
 
@@ -87,7 +101,6 @@
             });
          });
       });
-
    }
 
    var rankingTypes = ["occurrencesRanking", "relatedRanking", "hyponymsRanking", "influencedRanking"];
@@ -153,34 +166,6 @@
       }
    }
 
-   function getAll(http, $q) {
-
-      var defer = $q.defer();
-
-      http({ method: 'GET', url: (http,  $q) {
-
-          var defer = $q.defer();
-
-          http({ method: 'GET', url: host + "entity.json?sep_filter=True"}).
-             success(function (data, status, headers, config) {
-                defer.resolve(data.responseData.results);
-             }).
-             error(function (data, status, headers, config) {
-                defer.reject();
-             });
-
-          return defer.promise;
-       }}).
-         success(function (data, status, headers, config) {
-            defer.resolve(data.responseData.results);
-         }).
-         error(function (data, status, headers, config) {
-            defer.reject();
-         });
-
-      return defer.promise;
-   }
-
    function findThinkerByLabel(thinkerLabel, thinkers) {
 
       var ret = null;
@@ -194,5 +179,27 @@
 
       return ret;
    }
+
+   crossRef.directive('autoComplete', function ($timeout) {
+      return function (scope, iElement, iAttrs) {
+         iElement.autocomplete({
+            source: scope[iAttrs.uiItems],
+            select: function () {
+               $timeout(function () {
+                  iElement.trigger('input');
+                  var value = iElement.val();
+                  for (var i = 0; i < scope.entities.length; i++) {
+                     var entity = scope.entities[i];
+                     if (entity.label === value) {
+                        scope.currentThinkerID = entity.ID;
+                        scope.getCurrentThinker();
+                        break;
+                     }
+                  }
+               }, 0);
+            }
+         });
+      };
+   });
 
 })(window, jQuery);
