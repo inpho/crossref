@@ -110,5 +110,92 @@
          </tr>
       </tbody>
    </table>
+   <table>
+      <tbody>
+         <tr>
+            <td>
+               Born
+            </td>
+            <td>
+               {{currentThinker.birth_string}}
+            </td>
+         </tr>
+         <tr>
+            <td>
+               Died
+            </td>
+            <td>
+               {{currentThinker.death_string}}
+            </td>
+         </tr>
+         <tr>
+            <td>
+               Nationality
+            </td>
+            <td>
+               <ul>
+                  <li ng-repeat="country in currentThinker.nationalities">{{country}}</li>
+               </ul>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               Professions
+            </td>
+            <td>
+               <ul>
+                  <li ng-repeat="job in currentThinker.professions">{{job}}</li>
+               </ul>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span>Related Ideas (ID):</span>
+            </td>
+            <td>
+               <ul>
+                  <li ng-repeat="inf in currentThinker.related_ideas">{{inf}}</li></ul>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               Influenced Thinkers (ID):
+            </td>
+            <td>
+               <ul>
+                  <li ng-repeat="inf in currentThinker.influenced_by"><a ng-click="getThisThinker(inf)">
+                     {{inf}}</a> </li>
+               </ul>
+            </td>
+         </tr>
+         <tr>
+            <td>
+               <span>Related Thinkers (ID):</span><a ng-click="toggle('RelatedThinker')">{{showRelatedThinkerLabel}}</span>
+            </td>
+            <td>
+               <div ng-show="showRelatedThinker">
+                  <ul>
+                     <li ng-repeat="inf in currentThinker.related_thinkers"><a ng-click="getThisThinker(inf)">
+                        {{inf}} </a></li>
+                  </ul>
+               </div>
+            </td>
+         </tr>
+         <!-- students -->
+         <tr>
+            <td>
+               <span>Students (ID):</span><a ng-click="toggle('Student')">{{showStudentLabel}}</span>
+            </td>
+            <td>
+               <div ng-show="showStudent">
+                  <ul>
+                     <li ng-repeat="inf in currentThinker.students"><a ng-click="getThisThinker(inf)">{{inf}}
+                     </a></li>
+                  </ul>
+               </div>
+            </td>
+         </tr>
+      </tbody>
+   </table>
 </body>
 </html>
