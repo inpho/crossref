@@ -14,6 +14,10 @@
 
       $scope.currentThinkerID = "3345";
       $scope.newThinkerID = "";
+       
+      $scope.currentIdeaID = "2638";
+      $scope.newIdeaID = ""; 
+      $scope.currentIdea = []; 
 
       $scope.currentThinker = []; //initialize to an empty array.
 
@@ -42,13 +46,40 @@
       $scope.getThisThinker = function (thinkerID) {
          $scope.currentThinkerID = thinkerID;
          $scope.getCurrentThinker();
-      }
+      };
+      
+      $scope.getThisIdea = function (ideaID) {
+	 $scope.currentIdeaID = ideaID; 
+         console.log(ideaID); 
+	 console.log(currentIdeaID); 
+         $scope.getCurrentIdea(); 
+      };
+      $scope.getCurrentIdea = function() {
+        getIdeaService($scope, $http, $q); 
+      };
+
+      $scope.getNewIdea = function (){
+	  $scope.getThisIdea($scope.newIdeaID); 
+      };
 
       $scope.getNewThinker = function () {
          $scope.getThisThinker($scope.newThinkerID);
-      }
+      };
       setTimeout($scope.getCurrentThinker(), 500);
    });
+
+   function getIdeaService(scope, http, $q){
+       console.log("does it arrive?"); 
+       http({ method: 'GET', url: host + "/idea/" + scope.currentIdeaID + ".json" }).
+   
+         success(function (data, status, headers, config) {
+            scope.currentIdea = data;
+	    console.log(scope.currentIdea); 
+         }).
+         error(function (data, status, headers, config) {
+            alert("Error:" + status);
+         });
+}
 
    function getThinkerService(scope, http, $q) { //retrieve one thinker at a time using http service provided by AngularJS.  Recommend to stick with AngularJS
 

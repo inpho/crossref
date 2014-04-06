@@ -68,8 +68,8 @@
 <table class = "table table-striped table-bordered table-hover table-condensed">
       <thead>
          <tr>
-            <td style="width: 30px;"><div title="hoverin' words">Occurances</div></td>
-            <td style="width: 30px;"><a href="">Hyponyms</a>
+            <td style="width: 30px;">Occurances</td>
+            <td style="width: 30px;">Hyponyms
             </td>
             <td style="width: 30px;">Related Thinkers
             </td>
@@ -91,8 +91,8 @@
             </td>
             <td>
                <a ng-click="getThisThinker(thinker.ID)">{{thinker.label}}</a><br>
-               <a ng-href="https://inpho.cogs.indiana.edu/thinker/{{thinker.ID}}"/>InPho Entry</a><br>
-               <a ng-href="http://plato.stanford.edu/entries/{{thinker.sep_dir}}"/>Stanford Entry</a> 
+               <img ng-src = "/Users/sarazhang/crossref/lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/thinker/{{thinker.ID}}"/>InPho Entry</a><br>
+               <img ng-src ="/Users/sarazhang/crossref/lib/img/sepmanicon.png"> <a ng-href="http://plato.stanford.edu/entries/{{thinker.sep_dir}}"/>Stanford Entry</a> 
             </td>
          </tr>
       </tbody>
@@ -105,7 +105,8 @@
             </td>
             <td>
                <ul>
-                  <li ng-repeat="inf in currentThinker.related_ideas">{{inf}}</li></ul>
+                  <li ng-repeat="idea in currentThinker.related_ideas">
+		    <a ng-click = "getThisIdea(idea)">{{idea}}</a></li></ul>
             </td>
          </tr>
          <tr>
@@ -132,7 +133,7 @@
                </div>
             </td>
          </tr>
-         <!-- students -->
+         <!-- students 
          <tr>
             <td>
                <span>Students (ID):</span><a ng-click="toggle('Student')">{{showStudentLabel}}</span>
@@ -145,7 +146,7 @@
                   </ul>
                </div>
             </td>
-         </tr>
+         </tr>-->
       </tbody>
    </table>
 </body>
