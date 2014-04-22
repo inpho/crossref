@@ -15,86 +15,75 @@
 </head>
 <body ng-app="crossRef" ng-controller="crossRefCtrl">
 
-   search {{selected}}
-        <input auto-complete ui-items="labels" ng-model="selected">
-        <br><br>
-        <b>Idea Sources:</b><br>
-        1 - Occurrences<br>
-        2 - Hyponyms<br>
-        3 - User Evaluations<br>
-        4 - Related Terms<br>
-        5 - First-order Relations
-        <br>
-        <br>
-        <b>Thinker Sources:</b><br>
-        1 - Occurrences<br>
-        1 - Related Thinkers
-
- 
-   <br><br>Cross Reference for <!--{{sep_dir}} and--> <span style="font-weight: bold">{{entity.label}}</span>
-
-   <br><div style="width:600px;float:left;">
-      <table class="table table-striped table-bordered table-hover table-condensed">
-         <thead>
-            <tr>
-               <td style="width: 30px;" ng-show="showIdeaCol(1);">1</td>
-               <td style="width: 30px;" ng-show="showIdeaCol(2);">2</td>
-               <td style="width: 30px;" ng-show="showIdeaCol(3);">3</td>
-               <td style="width: 30px;" ng-show="showIdeaCol(4);">4</td>
-               <td style="width: 30px;" ng-show="showIdeaCol(5);">5</td>
-               <td style="width: 100%;"></td>
-            </tr>
-         </thead>
-         <tbody>
-            <tr ng-repeat="idea in ideas">
-               <td style="width: 30px;" ng-show="showIdeaCol(1);">{{idea.col0}}</td>
-               <td style="width: 30px;" ng-show="showIdeaCol(2);">{{idea.col1}}</td>
-               <td style="width: 30px;" ng-show="showIdeaCol(3);">{{idea.col2}}</td>
-               <td style="width: 30px;" ng-show="showIdeaCol(4);">{{idea.col3}}</td>
-               <td style="width: 30px;" ng-show="showIdeaCol(5);">{{idea.col4}}</td>
-               <td style="width: 100%;">
-                  <a ng-click="getThisEntity(idea.sep_dir)">{{idea.label}}</a><br>
-                  <img ng-src="/Users/sarazhang/crossref/lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/idea/{{idea.ID}}" />InPho Entry</a><br>
-                  <img ng-src="/Users/sarazhang/crossref/lib/img/sepmanicon.png">
-                  <a ng-href="http://plato.stanford.edu/entries/{{idea.sep_dir}}" />Stanford Entry</a> 
-               </td>
-            </tr>
-         </tbody>
-      </table>
-   </div>
+   <div style="text-align:center;"><h1>Cross Reference for <span style="font-weight: bold;color:red;">{{entity.label}}</span></h1></div><br><br>
 
 
-   <div style="width:600px;float:right;">
-      <table class="table table-striped table-bordered table-hover table-condensed">
-         <thead>
-            <tr>
-               <td style="width: 30px;" ng-show="showThinkerCol(1);">1</td>
-               <td style="width: 30px;" ng-show="showThinkerCol(2);">2</td>
-               <td style="width: 30px;" ng-show="showThinkerCol(3);">3</td>
-               <td style="width: 30px;" ng-show="showThinkerCol(4);">4</td>
-               <td style="width: 100%;"></td>
-            </tr>
-         </thead>
-         <tbody>
-            <tr ng-repeat="thinker in thinkers">
-               <td style="width: 30px;" ng-show="showThinkerCol(1);">{{thinker.col0}}<br>
-               </td>
-               <td style="width: 30px;" ng-show="showThinkerCol(2);">{{thinker.col1}}
-               </td>
-               <td style="width: 30px;" ng-show="showThinkerCol(3);">{{thinker.col2}}
-               </td>
-               <td style="width: 30px;" ng-show="showThinkerCol(4);">{{thinker.col3}}
-               </td>
-               <td style="width: 100%;">
-                  <a ng-click="getThisEntity(thinker.sep_dir)">{{thinker.label}}</a><br>
-                  <img ng-src="/Users/sarazhang/crossref/lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/thinker/{{thinker.ID}}" />InPho Entry</a><br>
-                  <img ng-src="/Users/sarazhang/crossref/lib/img/sepmanicon.png">
-                  <a ng-href="http://plato.stanford.edu/entries/{{thinker.sep_dir}}" />Stanford Entry</a> 
-               </td>
-            </tr>
-         </tbody>
-      </table>
-   </div>
+   <center><div style="width: 800px; align-content: center">
+
+      <div style="width: 300px; float: left;">
+         <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+               <tr>
+                  <td style="width: 30px;" ng-show="showIdeaCol(1);">Occurrences</td>
+                  <td style="width: 30px;" ng-show="showIdeaCol(2);">Related Terms</td>
+                  <td style="width: 30px;" ng-show="showIdeaCol(3);">User Evaluations</td>
+                  <td style="width: 30px;" ng-show="showIdeaCol(4);">Related Terms</td>
+                  <td style="width: 30px;" ng-show="showIdeaCol(5);">First-Order Relations</td>
+                  <td style="width: 100%;"></td>
+               </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="idea in ideas">
+                  <td style="width: 30px;" ng-show="showIdeaCol(1);">{{idea.col0}}</td>
+                  <td style="width: 30px;" ng-show="showIdeaCol(2);">{{idea.col1}}</td>
+                  <td style="width: 30px;" ng-show="showIdeaCol(3);">{{idea.col2}}</td>
+                  <td style="width: 30px;" ng-show="showIdeaCol(4);">{{idea.col3}}</td>
+                  <td style="width: 30px;" ng-show="showIdeaCol(5);">{{idea.col4}}</td>
+                  <td style="width: 100%;">
+                     <a ng-click="getThisEntity(idea.sep_dir)">{{idea.label}}</a><br>
+                     <img ng-src="/Users/sarazhang/crossref/lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/idea/{{idea.ID}}" />InPho</a><br>
+                     <img ng-src="/Users/sarazhang/crossref/lib/img/sepmanicon.png">
+                     <a ng-href="http://plato.stanford.edu/entries/{{idea.sep_dir}}" />SEP</a> 
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+
+
+      <div style="width: 300px; float: right;">
+         <table class="table table-striped table-bordered table-hover table-condensed">
+            <thead>
+               <tr>
+                  <td style="width: 30px;" ng-show="showThinkerCol(1);">Occurances</td>
+                  <td style="width: 30px;" ng-show="showThinkerCol(2);">Hyponyms</td>
+                  <td style="width: 30px;" ng-show="showThinkerCol(3);">Related Thinkers</td>
+                  <td style="width: 30px;" ng-show="showThinkerCol(4);">Has Influenced</td>
+                  <td style="width: 100%;"></td>
+               </tr>
+            </thead>
+            <tbody>
+               <tr ng-repeat="thinker in thinkers">
+                  <td style="width: 30px;" ng-show="showThinkerCol(1);">{{thinker.col0}}<br>
+                  </td>
+                  <td style="width: 30px;" ng-show="showThinkerCol(2);">{{thinker.col1}}
+                  </td>
+                  <td style="width: 30px;" ng-show="showThinkerCol(3);">{{thinker.col2}}
+                  </td>
+                  <td style="width: 30px;" ng-show="showThinkerCol(4);">{{thinker.col3}}
+                  </td>
+                  <td style="width: 100%;">
+                     <a ng-click="getThisEntity(thinker.sep_dir)">{{thinker.label}}</a><br>
+                     <img ng-src="/Users/sarazhang/crossref/lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/thinker/{{thinker.ID}}" />InPho</a><br>
+                     <img ng-src="/Users/sarazhang/crossref/lib/img/sepmanicon.png">
+                     <a ng-href="http://plato.stanford.edu/entries/{{thinker.sep_dir}}" />SEP</a> 
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div></center>
+
+<input auto-complete ui-items="labels" ng-model="selected"></div></p>
 </body>
-
 </html>
