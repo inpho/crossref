@@ -61,6 +61,11 @@
       return function (scope, iElement, iAttrs) {
          iElement.autocomplete({
             source: scope[iAttrs.uiItems],
+            messages: {
+               noResults: "",
+               results: function() {}
+            },
+            appendTo: "#container",
             select: function () {
                $timeout(function () {
                   iElement.trigger('input');
@@ -133,7 +138,7 @@
          //   /thinker/$id/related.json?sep_filter=True
          //   /thinker/$id/hyponyms.json?sep_filter=True
          //   /thinker/$id/influenced.json?sep_filter=True
-         scope.thinkerColumns= ["occurrences", "related", "hyponyms"];//, "influenced"];
+         scope.thinkerColumns = ["occurrences", "related", "hyponyms"];//, "influenced"];
       }
       else if (type === "idea") {
          //For idea
@@ -190,7 +195,7 @@
    function populateCrossRefForOneColumn(referencs, colIndex, data) {
 
       var colName = "col" + colIndex;
-      
+
       for (var i = 0; i < data.length; i++) {
 
          var ref = data[i];
