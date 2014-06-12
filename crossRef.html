@@ -60,9 +60,9 @@
                   <td style="width: 30px;" ng-show="showIdeaCol(4);">{{idea.col3}}</td>
                   <td style="width: 30px;" ng-show="showIdeaCol(5);">{{idea.col4}}</td>
                   <td style="width: 100%;">
-                     <a ng-click="getThisEntity(idea.sep_dir)">{{idea.label}}</a><br>
-                     <img ng-src="/Users/sarazhang/crossref/lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/idea/{{idea.ID}}" />InPho Entry</a><br>
-                     <img ng-src="/Users/sarazhang/crossref/lib/img/sepmanicon.png">
+                     {{idea.label}}
+                     <img ng-src="lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/idea/{{idea.ID}}" />InPho Entry</a>
+                     <img ng-src="lib/img/sepmanicon.png">
                      <a ng-href="http://plato.stanford.edu/entries/{{idea.sep_dir}}" />Stanford Entry</a> 
                   </td>
                </tr>
@@ -93,9 +93,9 @@
                   <td style="width: 30px;" ng-show="showThinkerCol(4);">{{thinker.col3}}
                   </td>
                   <td style="width: 100%;">
-                     <a ng-click="getThisEntity(thinker.sep_dir)">{{thinker.label}}</a><br>
-                     <img ng-src="/Users/sarazhang/crossref/lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/thinker/{{thinker.ID}}" />InPho Entry</a><br>
-                     <img ng-src="/Users/sarazhang/crossref/lib/img/sepmanicon.png">
+                     {{thinker.label}}
+                     <img ng-src="lib/img/check.gif"><a ng-href="https://inpho.cogs.indiana.edu/thinker/{{thinker.ID}}" />InPho Entry</a>
+                     <img ng-src="lib/img/sepmanicon.png">
                      <a ng-href="http://plato.stanford.edu/entries/{{thinker.sep_dir}}" />Stanford Entry</a> 
                   </td>
                </tr>
